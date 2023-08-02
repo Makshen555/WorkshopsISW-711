@@ -7,7 +7,7 @@ const express = require('express');
 const app = express();
 // database connection
 const mongoose = require("mongoose");
-const db = mongoose.connect(process.env.DB_CONNECTION_STRING, {
+const db = mongoose.connect("mongodb://localhost:27017/utn", {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true
@@ -16,8 +16,12 @@ const db = mongoose.connect(process.env.DB_CONNECTION_STRING, {
 const theSecretKey = process.env.JWT_SECRET;
 
 const {
-   courseGetAll, courseSearch
+   courseGetAll, courseSearch, tea
 } = require("./controllers/courseController.js");
+
+const {
+teacherGetAll
+} = require("./controllers/teacherController.js")
 
 // parser for the request body (required for the POST and PUT methods)
 const bodyParser = require("body-parser");
@@ -29,6 +33,7 @@ const teacherModel = require('./models/teacherModel.js');
 // graphQL service
 const graphqlResolvers = {
   getAllCourses: courseGetAll,
+  getAllTeachers: teacherGetAll,
   searchCourses: (req) => courseSearch(req),
   hello: function() { return "Hola Mundo"},
   version: function() {return "1.0"}

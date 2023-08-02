@@ -47,7 +47,16 @@ const teacherPost = async (req, res) => {
  * @param {*} req
  * @param {*} res
  */
-const teacherGet = (req, res) => {
+const teacherGetAll = (req) => {
+  return teacherModel.find((error, teachers) => {
+    if (error) {
+      console.log('there was an error', error);
+      return error;
+    }
+    return teachers;
+  });
+};
+/*const teacherGet = (req, res) => {
   // if an specific teacher is required
   if (req.query && req.query.id) {
     Teacher.findById(req.query.id)
@@ -71,7 +80,7 @@ const teacherGet = (req, res) => {
       });
   }
 };
-
+*/
 /**
  * Updates a teacher
  *
@@ -148,8 +157,5 @@ const teacherPatch = (req, res) => {
 };
 
 module.exports = {
-  teacherGet,
-  teacherPost,
-  teacherPatch,
-  teacherDelete
+  teacherGetAll
 }
